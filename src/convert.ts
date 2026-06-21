@@ -4,10 +4,10 @@ import {
     EIP7702Authorization,
     IUniversalAccountConfig,
     SUPPORTED_TOKEN_TYPE,
-    UNIVERSAL_ACCOUNT_VERSION,
     UniversalAccount,
 } from '@particle-network/universal-account-sdk';
 import { getBytes, hashAuthorization, Wallet } from 'ethers';
+
 config();
 
 // Step 3 — Convert any asset into USDT on BSC, handling EIP-7702 delegation inline.
@@ -22,21 +22,31 @@ config();
             smartAccountOptions: {
                 useEIP7702: true,
                 name: 'UNIVERSAL',
-                version: process.env.UNIVERSAL_ACCOUNT_VERSION || UNIVERSAL_ACCOUNT_VERSION,
+                version: '2.0.1',
                 ownerAddress: wallet.address,
                 // Optional: set solanaAccountIndex to control which Solana address is derived
                 // SOLANA_ACCOUNT_INDEX.CLASSIC = use classic Solana smart account address
                 // SOLANA_ACCOUNT_INDEX.EIP7702 = use EIP-7702 derived Solana address
                 // solanaAccountIndex: SOLANA_ACCOUNT_INDEX.CLASSIC,
             },
+            // Optional: defaults to auto-slippage. universalGas pays fees in PARTI.
+            tradeConfig: { slippageBps: 100, universalGas: true, usePrimaryTokens: [
+                SUPPORTED_TOKEN_TYPE.USDC,
+                SUPPORTED_TOKEN_TYPE.USDT,
+                SUPPORTED_TOKEN_TYPE.ETH,
+                SUPPORTED_TOKEN_TYPE.BNB,
+                SUPPORTED_TOKEN_TYPE.SOL,
+              ] },
+            // Staging UA RPC — must pair with contract version 2.0.1 above.
+            rpcUrl: 'https://universal-rpc-staging.particle.network',
         };
 
         const universalAccount = new UniversalAccount(universalAccountConfig);
 
         // 1. CREATE — describe WHAT you want; the SDK figures out the routing.
         const transaction = await universalAccount.createConvertTransaction({
-            expectToken: { type: SUPPORTED_TOKEN_TYPE.USDT, amount: '0.0001' },
-            chainId: CHAIN_ID.BSC_MAINNET,
+            expectToken: { type: SUPPORTED_TOKEN_TYPE.USDC, amount: '0.1' },
+            chainId: CHAIN_ID.ARBITRUM_MAINNET_ONE,
         });
 
         // 2. DELEGATE — sign any pending 7702 authorizations inline (first tx on a new chain).

@@ -1,4 +1,4 @@
-# Server-Side Universal Accounts + EIP-7702 — Workshop Demo
+# Universal Accounts + EIP-7702 — Workshop Demo
 
 A 3-file Node.js / TypeScript demo for the **Particle Network × Encode Club** hackathon (theme: Chain Abstraction & EIP-7702 tooling).
 
@@ -10,7 +10,7 @@ You'll initialize a [Universal Account](https://developers.particle.network/univ
 |---|---|---|
 | `src/address.ts` | `npm run address` | Initializes the UA and prints the owner EOA, EVM UA, and Solana UA addresses. In 7702 mode the EOA address **is** the UA address. |
 | `src/balance.ts` | `npm run balance` | Fetches the unified balance across every supported chain in one call. |
-| `src/convert.ts` | `npm run convert` | Converts any asset → USDT on BSC, signing the EIP-7702 authorization inline. |
+| `src/convert.ts` | `npm run convert` | Converts any asset → 0.1 USDC on Arbitrum, signing the EIP-7702 authorization inline. |
 
 ## Prerequisites
 
@@ -31,7 +31,7 @@ Fill `.env`:
 PROJECT_ID=...
 PROJECT_CLIENT_KEY=...
 PROJECT_APP_UUID=...
-PRIVATE_KEY=0x...        # throwaway demo wallet — never commit a real key
+PRIVATE_KEY=0x...        # throwaway demo wallet — never use a real key
 ```
 
 ## Run
@@ -59,7 +59,7 @@ Every Universal Account transaction follows the same shape:
 
 ## Going further
 
-- Swap `SUPPORTED_TOKEN_TYPE.USDT` / `CHAIN_ID.BSC_MAINNET` for other assets/chains.
+- Swap `SUPPORTED_TOKEN_TYPE.USDC` / `CHAIN_ID.ARBITRUM_MAINNET_ONE` (and the `amount`) for other assets/chains.
 - `createTransferTransaction()` — send tokens cross-chain.
 - `createBuyTransaction()` / `createSellTransaction()` — trading flows.
 - `createUniversalTransaction()` — call any contract on any chain.
@@ -68,6 +68,3 @@ Every Universal Account transaction follows the same shape:
 ## Docs
 
 - UA SDK reference: https://developers.particle.network/universal-accounts/ua-reference/web/overview
-- EIP-7702 wallets: https://developers.particle.network/universal-accounts/ua-reference/web/eip7702-wallets
-- Backend usage: https://developers.particle.network/universal-accounts/ua-reference/web/backend
-- Discord: https://discord.gg/BsPbaShcxv
