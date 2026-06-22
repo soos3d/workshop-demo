@@ -17,7 +17,7 @@
   "author": "Davide Zambiasi (Particle Network)",
   "license": "MIT",
   "dependencies": {
-    "@particle-network/universal-account-sdk": "latest",
+    "@particle-network/universal-account-sdk": "^2.0.0-beta.3",
     "dotenv": "^16.4.5",
     "ethers": "^6.13.0"
   },

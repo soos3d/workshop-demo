@@ -4,6 +4,7 @@ import {
     EIP7702Authorization,
     IUniversalAccountConfig,
     SUPPORTED_TOKEN_TYPE,
+    UNIVERSAL_ACCOUNT_VERSION_V2,
     UniversalAccount,
 } from '@particle-network/universal-account-sdk';
 import { getBytes, hashAuthorization, Wallet } from 'ethers';
@@ -22,23 +23,11 @@ config();
             smartAccountOptions: {
                 useEIP7702: true,
                 name: 'UNIVERSAL',
-                version: '2.0.1',
+                version: UNIVERSAL_ACCOUNT_VERSION_V2,
                 ownerAddress: wallet.address,
-                // Optional: set solanaAccountIndex to control which Solana address is derived
-                // SOLANA_ACCOUNT_INDEX.CLASSIC = use classic Solana smart account address
-                // SOLANA_ACCOUNT_INDEX.EIP7702 = use EIP-7702 derived Solana address
-                // solanaAccountIndex: SOLANA_ACCOUNT_INDEX.CLASSIC,
             },
             // Optional: defaults to auto-slippage. universalGas pays fees in PARTI.
-            tradeConfig: { slippageBps: 100, universalGas: true, usePrimaryTokens: [
-                SUPPORTED_TOKEN_TYPE.USDC,
-                SUPPORTED_TOKEN_TYPE.USDT,
-                SUPPORTED_TOKEN_TYPE.ETH,
-                SUPPORTED_TOKEN_TYPE.BNB,
-                SUPPORTED_TOKEN_TYPE.SOL,
-              ] },
-            // Staging UA RPC — must pair with contract version 2.0.1 above.
-            rpcUrl: 'https://universal-rpc-staging.particle.network',
+            tradeConfig: { slippageBps: 100, universalGas: false },
         };
 
         const universalAccount = new UniversalAccount(universalAccountConfig);

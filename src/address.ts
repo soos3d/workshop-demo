@@ -1,6 +1,7 @@
 import { config } from 'dotenv';
 import {
     IUniversalAccountConfig,
+    UNIVERSAL_ACCOUNT_VERSION_V2,
     UniversalAccount,
 } from '@particle-network/universal-account-sdk';
 import { Wallet } from 'ethers';
@@ -19,13 +20,11 @@ config();
             smartAccountOptions: {
                 useEIP7702: true,
                 name: 'UNIVERSAL',
-                version: '2.0.1',
+                version: UNIVERSAL_ACCOUNT_VERSION_V2,
                 ownerAddress: wallet.address,
             },
             // Optional: defaults to auto-slippage. universalGas pays fees in PARTI.
             tradeConfig: { slippageBps: 100, universalGas: true },
-            // Staging UA RPC — must pair with contract version 2.0.1 above.
-            rpcUrl: 'https://universal-rpc-staging.particle.network',
         };
 
         const universalAccount = new UniversalAccount(universalAccountConfig);
